@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario De Contacto</title>
+    {% load static %}
+
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script>
+      function validateForm() {
+          var input = document.getElementById('nom').value;
+          var pattern = /^[A-Za-zÀ-ÿ\s]+$/;
+
+          if (!pattern.test(input)) {
+              alert("Por favor, ingrese solo letras y espacios.");
+              return false;
+          }
+          return true;
+      }
+
+      document.getElementById('nom').addEventListener('input', function (event) {
+          var pattern = /^[A-Za-zÀ-ÿ\s]*$/;
+          var input = this.value;
+
+          if (!pattern.test(input)) {
+              this.value = input.replace(/[^A-Za-zÀ-ÿ\s]/g, '');
+          }
+      });
+    </script>
+</head>
+
+<body id="bdy"><!--contenedor principal y para mostrar todo el contenido de la pagina web -->
+    
+
+  <div>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light, estenav">
+      <!--creación de botón de hamburguesa-->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones" 
+              style="margin-left: 20px;">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- logo -->
+      <a class="navbar-brand" href="#"><!-- el <a> es para crear enlaces(links) -->
+        
+        <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="" style="margin-left: 20px;">
+      </a>
+      <div class="collapse navbar-collapse" id="opciones" style="margin-left: 20px;">   <!-- el <div> es un contenedor de elementos-->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'quienesomos' %}">Volver</a>
+          </li>           
+        </ul>
+      </div>
+    </nav>
+
+    <form id="mis-datos2" onsubmit="return validateForm()">
+      <h2>Formulario de contacto</h2>
+      <input type="text" id="nom" minlength="3" name="nom" required placeholder="Nombres" class="form-control">
+
+      <input type="text" id="ape" minlength="3" name="ape" required placeholder="Apellidos" class="form-control">
+
+      <input type="text" id="rut" name="rut" minlength="10" required placeholder="Rut Ej:12345678-9" class="form-control">
+        
+      <input type="number" id="telefono" name="telefono" minlength="8" required placeholder="Telefono de Contacto" class="form-control">
+
+      <select id="fallo" name="fallo" class="form-control" required>
+          <option value="0" hidden> Seleccione Tipo de fallo..</option>
+          <option value="1">Pantalla</option>
+          <option value="2">Bateria</option>
+          <option value="3">Puerto de Carga</option>
+          <option value="4">Mojado</option>
+          <option value="5">Otro Fallo</option>
+      </select>
+      <br>
+      <label>¿Has experimentado problemas de reinicios repentinos? (Sí/No)</label>
+      <div class="form-check">
+          <input type="radio" class="form-check-input" id="sino" name="respuesta" value="si">
+          <label for="si" class="form-check-label">Si</label>
+      </div>
+      <div class="form-check">
+          <input type="radio" class="form-check-input" id="sino" name="respuesta" value="no">
+          <label for="no" class="form-check-label">No</label>
+      </div>
+
+        <br>
+        <input type="submit" id="enviar" class="btn" value="Enviar">
+
+    </form>
+  
+  </div>
+  
+  
+    <script src="{% static 'js/validar.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>      

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuieneSomos</title>
+    {% load static %}
+
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .reloj {
+          margin: auto;
+      }
+      .navbar-nav {
+          flex-grow: 1;
+          justify-content: center;
+      }
+      .auth-section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      .navbar {
+          background-color: #b0b0b0; /* Fondo plomo */
+      }
+      .navbar-nav .nav-link,
+      .auth-section a {
+          font-weight: bold; /* Letras en negrita */
+      }
+      .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+    <script>
+
+      $(document).ready(function(){
+          $.get("https://jsonplaceholder.typicode.com/comments", function(data){
+              console.log(data);
+  
+              $.each(data, function(i, item){
+  
+                  if (i < 15) {
+  
+                      $("#opiniones").append("<tr><td>"+item.id+"</td><td>"+item.name+"</td><td>"+item.email+"</td><td>"+item.body+"</td></tr>");
+                  } else {
+  
+                      return false;
+                  }
+              });
+          });
+      });
+      
+  </script>
+
+</head> 
+<body>
+  <main class="container">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <!--creación de botón de hamburguesa-->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- logo -->
+        <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+            <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="">
+        </a>
+        
+        <div class="reloj">
+            <span id="tiempo">00 : 00 : 00</span>
+        </div>
+
+        <!-- enlaces -->
+        <div class="collapse navbar-collapse" id="opciones">   
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'YouTelefone' %}">
+                    <img src="{% static 'img/home.png' %}" alt="Inicio" width="20px"> Inicio
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contactoForm' %}">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tienda' %}">Tienda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'siguiente' %}">Productos Proximamente</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link btn" href="{% url 'perfil' %}">Perfil: {{user.username}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn" href="{% url 'mis_pedidos' %}">Mis Pedidos</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'registrar' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/registro.png' %}" alt="userBookStop" width="20px">Registrarse
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="auth-section">
+                {% if user.is_authenticated %}
+                <a href="#" style="color: rgb(226, 43, 43); font-size: 15px;">Bienvenido {{ user.username }}</a>
+                <a href="{% url 'salir' %}" id="userBookStop" class="btn mt-2">
+                    <img src="{% static 'img/exit.png' %}" alt="userBookStop" width="20px">Cerrar Sesión
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/login.png' %}" alt="userBookStop" width="20px">Iniciar sesión
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</main>
+    
+    <!-- Descripcion de imagenes y imagenes -->
+    <br><br><br>
+<!---->
+
+    <div class="row jumbotron" id="qSomos" >
+      <div class="col-lg-6">
+          <div>
+            <h1 class="titulosgod" style="color: aliceblue;" >You Phone</h1><br>
+            <h2 class="lead, titulosgod" style="color: aliceblue;" ><strong>Quiénes somos</strong></h2>
+            <br>
+            <p class="textogod" style="color: aliceblue;">
+              Somos tu destino confiable para la reparación rápida y confiable de teléfonos móviles.
+               Con un equipo experto y piezas de calidad, nos aseguramos de que tu dispositivo vuelva a funcionar como nuevo en poco tiempo.
+               <br><br>
+
+               En You Phone, nuestra misión es mantener tu vida conectada. ¡Contáctanos hoy mismo para resolver tus problemas de teléfono!. . <br><br>
+
+               Si amas estar siempre conectado y necesitas una solución confiable para tus dispositivos,
+                ¡estás en el lugar indicado! En You Phone, 
+                comprendemos la importancia de mantener tu teléfono en perfecto estado para que puedas seguir conectado con tus seres queridos y con el mundo que te rodea. 
+                Confía en nosotros para mantener tu vida conectada y tus dispositivos siempre listos para la acción. 
+                ¡Contáctanos hoy mismo y mantén tu mundo en marcha con You Phone! <strong> ¡Bienvenid@s a
+                  You Phone!</strong> 
+            </p>
+          </div>
+        </div>
+    <div class="col-lg-6">
+      <img src="{% static 'img/card6.jpg' %}" alt="Quiénes Somos" class="img-fluid">
+    </div>
+  </div>
+  
+<br><br><br>
+
+  <div class="row jumbotron" id="qSomos" >
+    <div class="col-lg-6">
+      <img src="{% static 'img/card7.png' %}" alt="Quiénes Somos" class="img-fluid">
+    </div>
+    <div class="col-lg-6">
+        <div>
+          <h1 class="titulosgod" style="color: aliceblue;" >Tips</h1><br>
+          <h2 class="lead, titulosgod" style="color: aliceblue;" ><strong>Que Hacer Cuando falla tu Celular</strong></h2>
+          <br>
+          <p class="textogod" style="color: aliceblue;">
+        
+          1. **Reinicia tu dispositivo:** Un reinicio puede resolver muchos problemas. <br><br>
+
+          2. **Verifica la batería:** Asegúrate de que esté cargada correctamente. <br><br>
+
+          3. **Actualiza el software:** Instala las últimas actualizaciones para solucionar errores. <br><br>
+
+          4. **Libera espacio de almacenamiento:** Elimina archivos innecesarios para mejorar el rendimiento. <br><br>
+
+          5. **Considera un servicio técnico:** Si los problemas persisten, Trae Tu telefono a You Phone. <br><br>
+          </p>
+        </div>
+      </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+
+<br><br><br>
+<!--Carrusel-->
+<div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-bs-target="#carousel1" data-bs-slide-to="0" class="active"></li>
+    <li data-bs-target="#carousel1" data-bs-slide-to="1"></li>
+    <li data-bs-target="#carousel1" data-bs-slide-to="2"></li>
+  </ol>
+
+
+  <!-- diapositivas -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="{% static 'img/carruv1.jpg' %}" alt="">
+        <div class="carousel-caption">
+         
+          <p><a href="#" style="color:black"></a></p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="{% static 'img/carruv2.jpg' %}" alt="">
+        <div class="carousel-caption">
+          
+          <p><a href="#" style="color:black"></a></p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="{% static 'img/carruv3.jpg' %}" alt="">
+        <div class="carousel-caption">
+       
+          <p><a href="#" style="color:black"></a></p>
+        </div>
+    </div>
+  </div>
+  <!-- botones de desplazamiento a izquierda y derecha -->      
+  <a class="carousel-control-prev" href="#carousel1" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+    
+  </a>
+  <a class="carousel-control-next" href="#carousel1" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+   
+  </a>
+</div>
+
+<br><br>
+
+<div class="video-container">
+  <iframe class="video" src="https://www.youtube.com/embed/BjenCLBaJ48?si=GO3Mk3czPRwsBXFb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<br><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <hr>
+      <h2 class="text-center">Opiniones de clientes</h2>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Id-Post</th>
+              <th scope="col">Nombre Post</th>
+              <th scope="col">Email</th>
+              <th scope="col">Opinion</th>
+            </tr>
+          </thead>
+          <tbody id="opiniones"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div><br><br>
+
+
+<!-- Footer -->
+<footer>
+  <p>Ubicacion del Local Fisico 
+    <a href="https://maps.app.goo.gl/TzZ2gkgPgCjznjmU7">
+      <img src="{% static 'img/logoubi.png' %}" alt="Ubicacion" width="25">
+    </a>
+  </p>
+  <p>Horario de Atencion de lunes a Viernes 10:00hrs a 18:00</p>
+  <p>Fabian Baeza, Jose Jimenez, &copy; Derechos de autor</p> 
+
+  <p>Redes Sociales
+  <a href="https://www.instagram.com/youphonetec/"  >
+    <img src="{% static 'img/logoinstagram.png' %}" alt="Instagram" width="25">
+  </a>
+  <a href="https://twitter.com/YPhone51863">
+    <img src="{% static 'img/twiterlogo.png' %}" alt="Instagram" width="25">
+  </a>
+  </p>
+</footer>  
+
+  </body>  
+</html>      

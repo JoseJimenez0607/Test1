@@ -1,0 +1,50 @@
+<div role="alert">
+    <table class="table table-secondary alert alert-secondary">
+        <thead>
+            <tr scope="row" class="text-center"><td colspan="3" style="font-weight: bold; font-size: 18px;"> CARRITO </td></tr>
+            <td style="font-size: 15px; font-weight: bold; color: black; text-align: center;">MARCA</td>
+            <td style="font-size: 15px; font-weight: bold; color: black; text-align: center;">PRECIO</td>
+            <td style="font-size: 15px; font-weight: bold; color: black; text-align: center;">CANTIDAD</td>
+        </thead>
+        <tbody>
+            {% if request.session.carrito.items %}
+                {% for key, value in request.session.carrito.items %}
+                    <tr>
+                        <td style="font-size: 13px;">{{ value.marca }}</td>
+                        <td style="font-size: 13px;">{{ value.precio }}</td>
+                        <td style="font-size: 13px;">{{ value.cantidad }}
+                            <br>
+                            <a href="{% url 'restar' value.idProducto %}" class="badge btn btn-primary">-</a>
+                            <a href="{% url 'agregar' value.idProducto %}" class="badge btn btn-primary">+</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total : </th>
+                        <th colspan="2">$ {{value.total}}</th>
+                    </tr>
+                {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-info text-center" style="font-weight: bold;">Sin Productos</div>
+                </td>
+            </tr>        
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+<div class="row text-center">
+    {% if request.session.carrito.items %}
+        <div class="col-6">
+            <a href="{% url 'limpiar' %}" class="btn btn-danger">Limpiar</a>
+        </div>
+
+        <div class="col-6">
+            <a href="{% url 'generarBoleta' %}" class="btn btn-success">Comprar</a>
+        </div><br><br>
+
+        <div class="text-center">
+            <a href="{{ link }}" class="btn btn-outline-primary">Pagar con MercadoPago</a>
+        </div>
+    {% endif %}
+</div>

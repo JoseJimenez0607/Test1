@@ -1,0 +1,144 @@
+body {
+    background-image: url("../img/fondopag.jpg");
+}
+
+/* Estos font-face son para traer fuentes personalizadas que no estan en las estandar */
+@font-face{
+    
+    font-family: fuentegod;
+    src: url("Dekmantel-Regular.ttf");
+}
+
+@font-face{
+    
+    font-family: fuentegod2;
+    src: url("Nightlong-Regular.ttf");
+}
+
+.estenav{
+    color: black;
+    font-family: fuentegod;
+    text-decoration: none;
+    padding-right: 35px;
+    font-size: 120%;
+    background-color: gainsboro;
+}
+
+.titulosgod{
+    color: black;
+    font-family: fuentegod;
+    text-decoration: none;
+    font-size: 180%;
+    text-align: center;
+}
+
+.textogod{
+    color: black;
+    font-family: fuentegod2;
+    text-decoration: none;
+    font-size: 130%;
+    text-align: center;
+}
+
+.card{
+    margin: 10px;
+    border: 5px solid black;
+}
+
+main {
+    margin-top: 15px;
+}
+
+#foto {
+    margin: auto;
+    display: block;
+}
+
+#texte {
+    text-align: inherit;
+}
+
+footer {
+    background-color: #333333;
+    color: #fff;
+    padding: 10px; /* es para separar colocando un espacio en esta ocacion de 10pixeles */
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+}
+
+#dipio {
+    background-color: rgb(44, 28, 62);
+    color: rgb(237, 241, 172);
+    padding: 7px;
+}
+
+.contenedor img {
+    width: auto; /* La imagen se ajusta automáticamente al tamaño del texto */
+    max-width: 100%; /* La imagen no superará el 100% del ancho del contenedor */
+    height: auto; /* Altura automática para mantener la proporción */
+    display: block; /* Para evitar espacios innecesarios debajo de la imagen */
+    margin:left; /* Centrar la imagen */
+}
+
+#dipiorig {
+    background-color:  rgb(44, 28, 62);
+    padding: 10px;
+}
+
+.video {
+    margin: auto;
+    display: block;
+}
+
+/* Para mostrar la descripción de las imágenes */
+.producto {
+    display: inline-block;
+    margin: 20px;
+    position: relative;
+}
+
+.descripcion {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all 0.3s ease;
+}
+
+.producto:hover .descripcion {
+    display: block;
+}
+
+.section-title {
+    line-height: 2rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    text-align:left;
+}
+
+#qSomos{
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0;
+    background-color:rgb(18, 17, 31);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #ffffff;
+}
+
+.fondocar{
+    background-color: gainsboro;
+} 
+
+.imgcenter{
+    text-align: center;/* Para centrar las imagenes de la galeria de fotos */
+}

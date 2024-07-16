@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="{% static 'js/reloj.js' %}"></script>
+    <script src="{% static 'js/validar.js' %}"></script>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <main class="container">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light, estenav">
+            <!--creación de botón de hamburguesa-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones" 
+                    style="margin-left: 20px;">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- logo -->
+            <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+            <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="" style="margin-left: 20px;">
+            </a>
+
+            <div class="reloj">
+            <span id="tiempo">00 : 00 : 00</span>
+            </div>
+        </nav><br>
+
+        <main class="container">
+            <div class="row justify-content-center">
+    
+                <div class="col-md-5">
+                    <div class="card" style="width: 100%; text-align: center;">
+                        <div class="card-body">
+    
+                            <h2 style="text-align: center;">Registrarse</h2><hr><br>
+                            <form method="POST">
+                                {% csrf_token %}
+    
+                                <div class="form-group" id="usu">
+                                    <label for="username">Nombre de usuario</label><br>
+                                    {{ form.username }}
+                                </div>
+                                <div>
+                                    {% if form.errors %}
+                                    <p style="color: red; font-size: 12px;">Nombre de Usuario Obligatorio</p>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="form-group" id="nom">
+                                    <label for="first_name">Nombre :</label><br>
+                                    {{ form.first_name }}
+                                </div>
+                                <div>
+                                    {% if form.errors %}
+                                    <p style="color: red; font-size: 12px;">Nombre Obligatorio</p>
+                                    {% endif %}
+                                </div>
+                            
+                                <div class="form-group" id="ape">
+                                    <label for="last_name">Apellido :</label><br>
+                                    {{ form.last_name }}
+                                </div>
+                                <div>
+                                    {% if form.errors %}
+                                    <p style="color: red; font-size: 12px;">Apellido Obligatorio</p>
+                                    {% endif %}
+                                </div>
+                            
+                                <div class="form-group" id="correo">
+                                    <label for="email">Email : </label><br>
+                                    {{ form.email }}
+                                </div>
+                                <div>
+                                    {% if form.errors %}
+                                    <p style="color: red; font-size: 12px;">Correo Obligatorio</p>
+                                    {% endif %}
+                                </div>
+                            
+                                <div class="form-group" id="pass1">
+                                    <label for="password1">Contraseña : </label><br>
+                                    {{ form.password1 }}
+                                </div>
+                                <div>
+                                    {% if form.errors %}
+                                    <p style="color: red; font-size: 12px;">Contraseña minimo 8 caracteres y no común o similar a sus datos anteriores</p>
+                                    {% endif %}
+                                </div>
+                            
+                                <div class="form-group" id="pass2">
+                                    <label for="password2">Reingrese Contraseña : </label><br>
+                                    {{ form.password2 }}
+                                </div>
+                                <div>
+                                    {% if form.errors %}
+                                    <p style="color: red; font-size: 12px;">La Contraseña tiene que ser la misma</p>
+                                    <p style="color: red; font-size: 12px;">Ingrese Bien los Datos. Inténtalo de nuevo.</p>
+                                    {% endif %}
+                                </div><br>
+                    
+                            <input type="submit" value="Registrar" class="btn btn-outline-primary"><br><br>
+                            <a href="{% url 'login' %}">Log In</a> |
+                            <a href="{% url 'YouTelefone' %}">Inicio</a> |
+    
+                            
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="{% static 'js/validar.js' %}"></script>
+           
+        </main>
+        <script src="{% static 'js/validar.js' %}"></script>
+    
+</body>
+</html>

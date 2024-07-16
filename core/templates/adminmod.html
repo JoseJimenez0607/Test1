@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos Proximos</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="{% static 'js/reloj.js' %}"></script>
+    <style>
+      .reloj {
+          margin: auto;
+      }
+      .navbar-nav {
+          flex-grow: 1;
+          justify-content: center;
+      }
+      .title-badge {
+          font-size: 2.5rem;
+          font-weight: bold;
+          background-color: #6c757d;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          display: inline-block;
+          text-align: center;
+          margin-bottom: 2rem;
+      }
+      .auth-section {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          margin-left: auto;
+      }
+      .navbar {
+          background-color:darkgrey; /* Fondo plomo */
+      }
+      .navbar-nav .nav-link,
+      .auth-section a {
+          font-weight: bold; /* Letras en negrita */
+      }
+      .auth-section .welcome {
+          color: rgb(226, 43, 43);
+          font-size: 15px;
+          margin-bottom: 5px;
+      }
+  </style>
+</head>
+
+
+<body><!--contenedor principal y para mostrar todo el contenido de la pagina web -->
+  <main class="container">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <!--creación de botón de hamburguesa-->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- logo -->
+        <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+            <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="">
+        </a>
+        
+        <div class="reloj">
+            <span id="tiempo">00 : 00 : 00</span>
+        </div>
+
+        <!-- enlaces -->
+        <div class="collapse navbar-collapse" id="opciones">   
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'YouTelefone' %}">
+                    <img src="{% static 'img/home.png' %}" alt="Inicio" width="20px"> Inicio
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tienda' %}">Tienda</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link btn" href="#">Perfil: {{user.username}}</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'registrar' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/registro.png' %}" alt="userBookStop" width="20px">Registrarse
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="auth-section">
+                {% if user.is_authenticated %}
+                <a href="#" style="color: rgb(226, 43, 43); font-size: 15px; margin-right: 10px;">Bienvenido {{ user.username }}</a>
+                <a href="{% url 'salir' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/exit.png' %}" alt="userBookStop" width="20px">Cerrar Sesión
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/login.png' %}" alt="userBookStop" width="20px">Iniciar sesión
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</main>
+    <!-- galeria de fotos -->
+
+    <!-- Con 4 row y 12 col -->
+    <!-- 4 Filas y cada fila contiene 3 Columnas -->
+    <br><br>
+    <div class="text-center">
+      <h1 class="title-badge">Proximamente</h1>
+    </div>
+
+  <div class="imgcenter">
+    <div class="row">
+      <div class="col-md">
+        <div class="producto" id="producto 1">
+          <img src="{% static 'img/achicar_1.webp' %}" alt="Producto 1">
+          <div class="descripcion">
+              <p>UGREEN Cargador 25W PD Set
+                $11.990
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 2">
+            <img src="{% static 'img/cable1.webp' %}" alt="Producto 2">
+            <div class="descripcion">
+                <p>Cable De Carga USB Tipo C Súper Rápido De 66W 6A Para Teléfono Android
+                  $1.699
+                </p>
+            </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 3">
+          <img src="{% static 'img/cargador2.webp' %}" alt="Producto 3">
+          <div class="descripcion">
+              <p>Cargador 50w Carga Rápida + Cable Tipo C A C
+                $6.990
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md">
+        <div class="producto" id="producto 4">
+          <img src="{% static 'img/cargador3.jpg' %}" alt="Producto 4">
+          <div class="descripcion">
+              <p>Cargador Compatible Con Motorola Carga Turbo Tipo C
+                $9.990
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 5">
+          <img src="{% static 'img/cable2.jpg' %}" alt="Producto 5">
+          <div class="descripcion">
+              <p>Genérico Cable Caragador Para Android A3
+                $5.100
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 6">
+          <img src="{% static 'img/cargador4.webp' %}" alt="Producto 6">
+          <div class="descripcion">
+              <p>Cargador 30 Watts USB-C Apple
+                $39.990
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md">
+        <div class="producto" id="producto 7">
+          <img src="{% static 'img/audifonos1.webp' %}" alt="Producto 7">
+          <div class="descripcion">
+              <p>Audífonos Galaxy Buds2 Lavender
+                $99.990
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 8">
+          <img src="{% static 'img/audifono2_1.webp' %}" alt="Producto 8">
+          <div class="descripcion">
+              <p>Audífono True Wireless A25i Negro Soundcore
+                $19.990
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 9">
+          <img src="{% static 'img/audifono4.webp' %}" alt="Producto 9">
+          <div class="descripcion">
+              <p>Panasonic Audífonos Inalámbricos / RZ-S500WPP-K
+                $39.990
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md">
+        <div class="producto" id="producto 10">
+          <img src="{% static 'img/audifonos5.webp' %}" alt="Producto 10">
+          <div class="descripcion">
+              <p>Bowmann Audifonos In Ear Tactil Tws Bluetooth Bw-m10
+                $6.490
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 11">
+          <img src="{% static 'img/audifono6.webp' %}" alt="Producto 11">
+          <div class="descripcion">
+              <p>Logitech Audífonos Gamer G PRO
+                $50.000
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="producto" id="producto 12">
+          <img src="{% static 'img/audifono7.webp' %}" alt="Producto 12">
+          <div class="descripcion">
+              <p>Blik Audifonos Bluetooth Air600
+                $16.990
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br><br>
+<hr>
+<!-- Footer -->
+<footer>
+  <p>Ubicacion del Local Fisico 
+    <a href="https://maps.app.goo.gl/TzZ2gkgPgCjznjmU7">
+      <img src="{% static 'img/logoubi.png' %}" alt="Ubicacion" width="25">
+    </a>
+  </p>
+
+  <p>Horario de Atencion de lunes a Viernes 10:00hrs a 18:00</p>
+  <p>Fabian Baeza, Jose Jimenez, &copy; Derechos de autor</p> 
+
+  <p>Redes Sociales
+  <a href="https://www.instagram.com/youphonetec/"  >
+    <img src="{% static 'img/logoinstagram.png' %}" alt="Instagram" width="25">
+  </a>
+
+  <a href="https://twitter.com/YPhone51863">
+    <img src="{% static 'img/twiterlogo.png' %}" alt="Instagram" width="25">
+  </a>
+  </p>
+</footer>  
+
+</body>
+</html>      

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mis Pedidos</title>
+        {% load static %}
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+        <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        <script src="{% static 'js/reloj.js' %}"></script>
+        <style>
+            .bd-placeholder-img {
+              font-size: 1.125rem;
+              text-anchor: middle;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              }
+          
+              @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+                }
+              }
+              .reloj {
+                margin: auto;
+            }
+            .navbar-nav {
+                flex-grow: 1;
+                justify-content: center;
+            }
+            .auth-section {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                margin-left: auto;
+            }
+            .navbar {
+                background-color:darkgrey; /* Fondo plomo */
+            }
+            .navbar-nav .nav-link,
+            .auth-section a {
+                font-weight: bold; /* Letras en negrita */
+            }
+            .auth-section .welcome {
+                color: rgb(226, 43, 43);
+                font-size: 15px;
+                margin-bottom: 5px;
+            }
+            .table-responsive {
+            margin-bottom: 1.5rem;
+            }
+          </style>
+    </head>
+<body>
+    <main class="container">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <!--creación de botón de hamburguesa-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- logo -->
+            <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+                <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="">
+            </a>
+            
+            <div class="reloj">
+                <span id="tiempo">00 : 00 : 00</span>
+            </div>
+    
+            <!-- enlaces -->
+            <div class="collapse navbar-collapse" id="opciones">   
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'YouTelefone' %}">
+                            <img src="{% static 'img/home.png' %}" alt="Inicio" width="20px"> Inicio
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link btn" href="{% url 'perfil' %}">Perfil: {{user.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn" href="{% url 'mis_pedidos' %}">Mis Pedidos</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'registrar' %}" id="userBookStop" class="btn">
+                            <img src="{% static 'img/registro.png' %}" alt="Registrarse" width="20px"> Registrarse
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="auth-section">
+                    {% if user.is_authenticated %}
+                    <a href="#" style="color: rgb(226, 43, 43); font-size: 15px; margin-right: 10px;">Bienvenido {{ user.username }}</a>
+                    <a href="{% url 'salir' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/exit.png' %}" alt="Cerrar Sesión" width="20px"> Cerrar Sesión
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/login.png' %}" alt="Iniciar Sesión" width="20px"> Iniciar sesión
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </main>
+    <div class="container mt-5">
+        <h2 class="text-center"><span class="badge bg-secondary">Mis Pedidos</span></h2>
+        {% if detalles %}
+            {% for boleta, detalle in detalles %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Pedido ID:</strong> {{ boleta.id_boleta }} <br>
+                        <strong>Fecha:</strong> {{ boleta.fechaCompra }} <br>
+                        <strong>Total:</strong> ${{ boleta.total }} <br>
+                        <strong>Usuario:</strong> {{ boleta.usuario }}
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in detalle %}
+                                        <tr>
+                                            <td>{{ item.id_producto.modelo }}</td>
+                                            <td>{{ item.cantidad }}</td>
+                                            <td>${{ item.subtotal }}</td>
+                                            <td>{{ boleta.estado }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No has realizado ningún pedido.</p>
+        {% endif %}
+        <div class="text-center">
+            <a href="{% url 'tienda' %}" class="btn btn-primary">Volver a la Tienda</a>
+        </div>
+    </div>
+</body>
+</html>

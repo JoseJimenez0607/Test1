@@ -1,0 +1,74 @@
+{
+    "clientes":[
+        {
+            "id":"1",
+            "nombre":"Juan Pereira",
+            "arreglo":"Cambiar pantalla y batería",
+            "foto": "https://i.ibb.co/BrkyKSN/Cliente1.png",
+            "valoracion":"★★★★★"
+        },
+        {
+            "id":"2",
+            "nombre":"Teresa Chávez",
+            "arreglo":"Actualización de software y reparación de pantalla",
+            "foto": "https://i.ibb.co/G93hf9n/Cliente2.png",
+            "valoracion":"★★★★☆"
+        },
+        {
+            "id":"3",
+            "nombre":"Jack Grealish",
+            "arreglo":"Cambiar pantalla y auricular",
+            "foto": "https://i.ibb.co/StZqTtL/Cliente3.png",
+            "valoracion":"★★★★★"
+        },
+        {
+            "id":"4",
+            "nombre":"Luis Hamilton",
+            "arreglo":"Cambiar batería y puerto de carga",
+            "foto": "https://i.ibb.co/pPxFT6B/Cliente4.png",
+            "valoracion":"★★★★☆"
+        },
+        {
+            "id":"5",
+            "nombre":"Martín González",
+            "arreglo":"Cambiar pantalla y puerto de carga",
+            "foto": "https://i.ibb.co/60QNWRN/Cliente5.png",
+            "valoracion":"★★★★☆"
+        },
+        {
+            "id":"6",
+            "nombre":"Eugenio Gonzáles",
+            "arreglo":"Reparación de pantalla rota",
+            "foto": "https://i.ibb.co/r419msf/Cliente6.png",
+            "valoracion":"★★★★★"
+        },
+        {
+            "id":"7",
+            "nombre":"Joao Cabrera",
+            "arreglo":"Cambiar pantalla, batería y puerto de carga",
+            "foto": "https://i.ibb.co/DK6GNrp/Cliente7.png",
+            "valoracion":"★★★★★"
+        },
+        {
+            "id":"8",
+            "nombre":"Baby Bandito",
+            "arreglo":"Reparación de puerto de carga dañado",
+            "foto": "https://i.ibb.co/M2wkjTn/Cliente8.png",
+            "valoracion":"★★★★★"
+        },
+        {
+            "id":"9",
+            "nombre":"Sara Goméz",
+            "arreglo":"Cambiar batería y botón de encendido",
+            "foto": "https://i.ibb.co/r439Mq4/Cliente9.png",
+            "valoracion":"★★★★☆"
+        },
+        {
+            "id":"10",
+            "nombre":"Aldo Asenjo",
+            "arreglo":"Reemplazo de batería agotada",
+            "foto": "https://i.ibb.co/jfVPNy2/Cliente10.png",
+            "valoracion":"★★★★★"
+        }
+    ]
+}

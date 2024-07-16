@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouPhone</title>
+    {% load static %}
+
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="{% static 'js/reloj.js' %}"></script>
+    <style>
+      .reloj {
+          margin: auto;
+      }
+      .navbar-nav {
+          flex-grow: 1;
+          justify-content: center;
+      }
+      .auth-section {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      .navbar {
+          background-color: #b0b0b0; /* Fondo plomo */
+      }
+      .navbar-nav .nav-link,
+      .auth-section a {
+          font-weight: bold; /* Letras en negrita */
+      }
+      .title-badge {
+          font-size: 2.5rem;
+          font-weight: bold;
+          background-color: #6c757d;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          display: inline-block;
+          text-align: center;
+          margin-bottom: 2rem;
+      }
+      .table-container {
+            overflow-x: auto;
+        }
+        .table th, .table td {
+            white-space: nowrap;
+        }
+        .table img {
+            max-width: 100px;
+            height: auto;
+        }
+  </style>
+
+  </head>
+
+<body>
+  <main class="container">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <!--creación de botón de hamburguesa-->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- logo -->
+        <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+            <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="">
+        </a>
+        
+        <div class="reloj">
+            <span id="tiempo">00 : 00 : 00</span>
+        </div>
+
+        <!-- enlaces -->
+        <div class="collapse navbar-collapse" id="opciones">   
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quienesomos' %}">Quienes Somos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contactoForm' %}">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tienda' %}">Tienda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'adminmod' %}">Productos Proximamente</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link btn" href="{% url 'perfil' %}">Perfil: {{user.username}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn" href="{% url 'mis_pedidos' %}">Mis Pedidos</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'registrar' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/registro.png' %}" alt="userBookStop" width="20px">Registrarse
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="auth-section">
+                {% if user.is_authenticated %}
+                <a href="#" style="color: rgb(226, 43, 43); font-size: 15px;">Bienvenido {{ user.username }}</a>
+                <a href="{% url 'salir' %}" id="userBookStop" class="btn mt-2">
+                    <img src="{% static 'img/exit.png' %}" alt="userBookStop" width="20px">Cerrar Sesión
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/login.png' %}" alt="userBookStop" width="20px">Iniciar sesión
+                </a>
+                {% endif %}
+                
+                {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'siguiente' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/modificargod.png' %}" alt="userBookStop" width="20px">Modificar Productos
+                </a>
+                <a href="{% url 'ver_todos_los_pedidos' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/admin.png' %}" alt="userBookStop" width="20px">Ver todos los Pedidos
+                </a>
+                {% endif  %}
+            </div> 
+        </div>
+    </nav>
+</main>
+    <main class="container">
+        <br><br><!-- los br es para crear un salto de linea (un espacio en blanco) -->
+
+        
+        <div class="text-center">
+            <h1 class="title-badge">YouPhone</h1><hr>
+        </div>
+        
+        <!--carrusel-->
+
+        <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+            <ol class="carousel-indicators"> <!--el <ol> lo usamos para crear una lista ordenada-->
+              <li data-bs-target="#carousel1" data-bs-slide-to="0" class="active"></li><!--el <li> es para representar elementos de una lista -->
+              <li data-bs-target="#carousel1" data-bs-slide-to="1"></li> <!--en este caso representa elementos de una lista ordenada-->
+              <li data-bs-target="#carousel1" data-bs-slide-to="2"></li>
+            </ol>
+
+
+            <!-- diapositivas -->
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="{% static 'img/carru1.png' %}" alt="">
+                  <div class="carousel-caption">
+                   
+                    <p><a href="#" style="color:black"></a></p>
+                  </div>
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="{% static 'img/carru2.png' %}" alt="">
+                  <div class="carousel-caption">
+                    
+                    <p><a href="#" style="color:black"></a></p>
+                  </div>
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="{% static 'img/carru3.gif' %}" alt="">
+                  <div class="carousel-caption">
+                 
+                    <p><a href="#" style="color:black"></a></p>
+                  </div>
+              </div>
+            </div>
+            <!-- botones de desplazamiento a izquierda y derecha -->      
+            <a class="carousel-control-prev" href="#carousel1" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+              
+            </a>
+            <a class="carousel-control-next" href="#carousel1" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+             
+            </a>
+        </div>
+
+        <br><br>
+
+        <h2 class="titulosgod">Acerca De</h2><hr>
+
+        <!-- Cartas -->
+        <!-- 1 fila y dentro de esa fila hay 3 columnas -->
+        <div class="row"><!-- Fila -->
+            <div class="col-md"><!-- Columna -->
+                <div class="card">
+                    <img class="card-img-top" src="{% static 'img/confianza (1).png' %}">            
+                    <div class="card-body">
+                        <h4 class="card-title, titulosgod" >CONFIANZA</h4>
+                        <p class="card-text, textogod" >Nuestra empresa de reparación de teléfonos sobresale en el área de reparación de placas de celulares y microsoldadura.
+                           Con técnicos altamente capacitados y tecnología de punta, garantizamos soluciones precisas y duraderas para cualquier problema de hardware. 
+                           Nos destacamos por nuestra habilidad para diagnosticar y resolver problemas complejos, brindando un servicio rápido y confiable. 
+                           Clientes satisfechos elogian nuestra atención personalizada y la calidad impecable de nuestro trabajo. 
+                           Confíe en nosotros para restaurar su dispositivo a su pleno funcionamiento en tiempo récord. </p><!-- la p es para crear un parrafo de texto y organizarlo -->
+                    </div>
+                </div>      
+            </div>
+            <div class="col-md">
+                <div class="card">         
+                    <img class="card-img-top" src="{% static 'img/general2 (1).png' %}">            
+                    <div class="card-body">
+                        <h4 class="card-title, titulosgod" >Servicio General</h4>
+                        <p class="card-text, textogod" >En nuestra empresa de reparación de teléfonos, 
+                          ofrecemos un servicio integral y de alta calidad para resolver una amplia gama de problemas, 
+                          desde pantallas rotas hasta problemas de batería o conectividad. 
+                          Nuestro equipo de técnicos altamente capacitados utiliza piezas de repuesto de calidad y herramientas de vanguardia para garantizar reparaciones precisas y eficientes. 
+                          Nos comprometemos a proporcionar un servicio rápido, conveniente y orientado al cliente, 
+                          asegurando una experiencia satisfactoria desde la consulta inicial hasta la entrega del dispositivo reparado. 
+                          Confíe en nosotros para devolverle a su teléfono su funcionalidad óptima y mantenerlo conectado de manera confiable. </p>
+                    </div>
+                </div>      
+            </div>
+            <div class="col-md">
+                <div class="card">          
+                    <img class="card-img-top" src="{% static 'img/cambiopantalla (1).webp' %}">            
+                    <div class="card-body">
+                        <h4 class="card-title, titulosgod" >Cambios de Pantalla</h4>
+                        <p class="card-text, textogod" >En nuestra empresa de reparación de teléfonos, el cambio de pantalla es uno de nuestros servicios estrella. 
+                          Utilizamos pantallas de la más alta calidad y garantizamos una instalación precisa para devolverle a su dispositivo su claridad visual y funcionalidad óptimas. 
+                          Nuestros técnicos expertos manejan cada cambio con destreza y cuidado, asegurando que su teléfono luzca como nuevo en poco tiempo. 
+                          Con un enfoque meticuloso en cada detalle, ofrecemos resultados impecables que superan las expectativas de nuestros clientes. 
+                          Confíe en nosotros para revitalizar la apariencia y la experiencia de uso de su teléfono con un cambio de pantalla de primera categoría. </p>
+                    </div>
+                </div>      
+            </div>
+        </div><br>
+    
+          <hr>
+          <h2 style="text-align: center;">Telefonos</h2>
+          <hr>
+          <div class="row">
+              <div class="col-md-4">
+                  <input type="button" value="Mostrar Clientes" class="btn btn-primary" 
+                          onclick="mostrar()">
+              </div>
+          </div>
+          <div class="container mt-4">
+            <div class="table-container">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Descripción de Trabajo</th>
+                            <th>Imagen</th>
+                            <th>Valoración del Cliente</th>
+                        </tr>
+                    </thead>
+                    <tbody id="telefo">
+                        <!-- Filas de datos -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+          <!-- npm install -g json-server --> <!-- json-server --watch telefonos.json --host 0.0.0.0 port 3000 -->
+      
+      <script src="{% static 'js/funcion.js' %}"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </main><br><br>
+
+<!-- Footer -->
+<footer>
+  <p>Ubicacion del Local Fisico 
+    <a href="https://maps.app.goo.gl/TzZ2gkgPgCjznjmU7">
+      <img src="{% static 'img/logoubi.png' %}" alt="Ubicacion" width="25">
+    </a>
+  </p>
+  <p>Horario de Atencion de lunes a Viernes 10:00hrs a 18:00</p>
+  <p>Fabian Baeza, Jose Jimenez, &copy; Derechos de autor</p> 
+
+  <p>Redes Sociales
+  <a href="https://www.instagram.com/youphonetec/"  >
+    <img src="{% static 'img/logoinstagram.png' %}" alt="Instagram" width="25">
+  </a>
+  <a href="https://twitter.com/YPhone51863">
+    <img src="{% static 'img/twiterlogo.png' %}" alt="Instagram" width="25">
+  </a>
+  </p>
+</footer>  
+  </body>
+</html>

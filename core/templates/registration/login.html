@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="{% static 'js/reloj.js' %}"></script>
+
+    
+
+</head>
+<body>
+    <main class="container">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light, estenav">
+            <!--creación de botón de hamburguesa-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones" 
+                    style="margin-left: 20px;">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- logo -->
+            <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+            <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="" style="margin-left: 20px;">
+            </a>
+
+            <div class="reloj">
+            <span id="tiempo">00 : 00 : 00</span>
+            </div>
+        </nav><br>
+    </main>
+
+    <main class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-4">
+                <div class="card" style="width: 100%; text-align: center;">
+                    <div class="card-body">
+
+                        <h2>Iniciar Sesión</h2><hr><br>
+                        <form action="#" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="">Nombre de Usuario: </label><br>
+                                {{form.username}}
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="">Contraseña: </label><br>
+                                {{form.password}}
+                            </div>
+                            <div>
+                                {% if form.errors %}
+                                <p style="color: red; font-size: 12px;">Usuario y/o contraseña incorrecto. Inténtalo de nuevo.</p>
+                                {% endif %}
+                            </div><br>
+                
+                        <input type="submit" value="Log In" class="btn btn-outline-primary" ><br><br>
+                        <a href="{% url 'registrar' %}">Registrarse</a> |
+                        <a href="{% url 'YouTelefone' %}">Inicio</a> |
+                        <a href="{% url 'password_reset' %}" class="btn btn-danger" style="text-decoration: none;">Olvidé mi contraseña</a>|
+                        
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    
+
+
+
+
+
+</body>
+</html>

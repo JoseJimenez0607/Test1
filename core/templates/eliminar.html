@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Eliminar</title>
+    {% load static %}
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="{% static 'js/reloj.js' %}"></script>
+
+    <style>
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          }
+      
+          @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+            }
+          }
+          .reloj {
+            margin: auto;
+        }
+        .navbar-nav {
+            flex-grow: 1;
+            justify-content: center;
+        }
+        .auth-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: auto;
+        }
+        .navbar {
+            background-color:darkgrey; /* Fondo plomo */
+        }
+        .navbar-nav .nav-link,
+        .auth-section a {
+            font-weight: bold; /* Letras en negrita */
+        }
+        .auth-section .welcome {
+            color: rgb(226, 43, 43);
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main class="container">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <!--creación de botón de hamburguesa-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- logo -->
+            <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+                <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="">
+            </a>
+            
+            <div class="reloj">
+                <span id="tiempo">00 : 00 : 00</span>
+            </div>
+    
+            <!-- enlaces -->
+            <div class="collapse navbar-collapse" id="opciones">   
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'YouTelefone' %}">
+                            <img src="{% static 'img/home.png' %}" alt="Inicio" width="20px"> Inicio
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link btn" href="{% url 'siguiente' %}">Volver</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'registrar' %}" id="userBookStop" class="btn">
+                            <img src="{% static 'img/registro.png' %}" alt="Registrarse" width="20px"> Registrarse
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="auth-section">
+                    {% if user.is_authenticated %}
+                    <a href="#" style="color: rgb(226, 43, 43); font-size: 15px; margin-right: 10px;">Bienvenido {{ user.username }}</a>
+                    <a href="{% url 'salir' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/exit.png' %}" alt="Cerrar Sesión" width="20px"> Cerrar Sesión
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/login.png' %}" alt="Iniciar Sesión" width="20px"> Iniciar sesión
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </main>
+
+    <main class="container"><br>
+
+        <h2 style="text-align: center;">Eliminando Producto</h2><hr>
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-4">
+                <div class="card" style="width: 100%; text-align: center;">
+
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            {% if producto.imagen %}
+                                <img src="{{ producto.imagen.url }}" width="80px" height="80px" class="card-img-top" style="height: 200px;" alt="">
+                                <label for="imagen">Imagen: </label>
+                                {{ producto.imagen }} <br>
+                            {% else %}
+                                <h4 style="color: red;">Producto Sin Foto</h4>
+                            {% endif %}
+                        </div><br>
+
+                        <div class="form-group">
+                            <label for="idProducto">Id Producto: </label>
+                            {{ producto.idProducto }}
+                        </div><br>
+
+                        <div class="form-group">
+                            <label for="marca">Marca: </label>
+                            {{ producto.marca }}
+                        </div><br>
+
+                        <div class="form-group">
+                            <label for="modelo">Modelo: </label>
+                            {{ producto.modelo }}
+                        </div><br>
+
+                        <div class="form-group">
+                            <label for="detalle">Detalle: </label>
+                            {{ producto.detalle }}
+                        </div><br><br>
+
+                        <input type="submit" value="Confirmar Eliminación" name="eliminar" class="btn btn-outline-danger"><br><br>
+                        
+                    </form><br>
+                </div>
+            </div>
+        </div>
+    </main>

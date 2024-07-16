@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="{% static 'js/reloj.js' %}"></script>
+    <style>
+        .reloj {
+            margin: auto;
+        }
+        .navbar-nav {
+            flex-grow: 1;
+            justify-content: center;
+        }
+        .title-badge {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background-color: #6c757d;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .auth-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: auto;
+        }
+        .navbar {
+            background-color:darkgrey; /* Fondo plomo */
+        }
+        .navbar-nav .nav-link,
+        .auth-section a {
+            font-weight: bold; /* Letras en negrita */
+        }
+        .auth-section .welcome {
+            color: rgb(226, 43, 43);
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+
+<body><!--contenedor principal y para mostrar todo el contenido de la pagina web -->
+  <main class="container">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <!--creación de botón de hamburguesa-->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- logo -->
+        <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+            <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="">
+        </a>
+        
+        <div class="reloj">
+            <span id="tiempo">00 : 00 : 00</span>
+        </div>
+
+        <!-- enlaces -->
+        <div class="collapse navbar-collapse" id="opciones">   
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'YouTelefone' %}">
+                    <img src="{% static 'img/home.png' %}" alt="Inicio" width="20px"> Inicio
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tienda' %}">Tienda</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link btn" href="{% url 'perfil' %}">Perfil: {{user.username}}</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'registrar' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/registro.png' %}" alt="userBookStop" width="20px">Registrarse
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="auth-section">
+                {% if user.is_authenticated %}
+                <a href="#" style="color: rgb(226, 43, 43); font-size: 15px; margin-right: 10px;">Bienvenido {{ user.username }}</a>
+                <a href="{% url 'salir' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/exit.png' %}" alt="userBookStop" width="20px">Cerrar Sesión
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" id="userBookStop" class="btn">
+                    <img src="{% static 'img/login.png' %}" alt="userBookStop" width="20px">Iniciar sesión
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</main>
+
+  {% if user.is_authenticated and user.is_staff %}
+  <main class="container"><br>
+    <hr>
+    <div class="text-center">
+        <h1 class="title-badge">Administracion De Productos</h1>
+    </div>
+    <hr>
+    <br>
+  
+    <div class="table-responsive">
+        <table class="table table-secondary">
+            <thead>
+                <tr>
+                    <th>Id Productos</th>
+                    <th>Imagen</th>
+                    <th>Marca</th>
+                    {% if user.is_authenticated and user.is_staff %}
+                    <th>Actualizar</th>
+                    <th>Eliminar</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for Producto in datos %}
+                <tr>
+                    <td>{{ Producto.idProducto }}</td>
+                    <td><img src="{{ Producto.imagen.url }}" style="width: 150px; height: 150px;"></td>
+                    <td>{{ Producto.marca }}</td>
+                    {% if user.is_authenticated and user.is_staff %}
+                    <td>
+                        <a href="{% url 'modificar' Producto.idProducto %}" id="userBookStop" class="btn btn-secondary">
+                        <img src="{% static 'img/modificargod.png' %}" alt="userBookStop" width="20px">Modificar Productos
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'eliminar' Producto.idProducto %}" id="userBookStop" class="btn btn-secondary">
+                        <img src="{% static 'img/eliminargod.png' %}" alt="userBookStop" width="20px">Eliminar
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if user.is_authenticated and user.is_staff %}
+    <a href="{% url 'crear' %}" class="btn btn-secondary">Crear Producto</a>
+    {% endif %}
+</main>
+{% endif %}
+<hr><br>
+<!-- Footer -->
+<footer>
+  <p>Ubicacion del Local Fisico 
+    <a href="https://maps.app.goo.gl/TzZ2gkgPgCjznjmU7">
+      <img src="{% static 'img/logoubi.png' %}" alt="Ubicacion" width="25">
+    </a>
+  </p>
+
+  <p>Horario de Atencion de lunes a Viernes 10:00hrs a 18:00</p>
+  <p>Fabian Baeza, Jose Jimenez, &copy; Derechos de autor</p> 
+
+  <p>Redes Sociales
+  <a href="https://www.instagram.com/youphonetec/"  >
+    <img src="{% static 'img/logoinstagram.png' %}" alt="Instagram" width="25">
+  </a>
+
+  <a href="https://twitter.com/YPhone51863">
+    <img src="{% static 'img/twiterlogo.png' %}" alt="Instagram" width="25">
+  </a>
+  </p>
+</footer>  
+
+</body>
+</html>      

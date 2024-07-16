@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+    {% load static %}
+
+    <link rel="shortcut icon" href="{% static 'img/logogodd.png' %}">
+    <link rel="stylesheet" href="{% static 'css/MisEstilos.css' %}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="{% static 'js/reloj.js' %}"></script>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+    
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+          }
+        }
+        .reloj {
+          margin: auto;
+      }
+      .navbar-nav {
+          flex-grow: 1;
+          justify-content: center;
+      }
+      .auth-section {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          margin-left: auto;
+      }
+      .navbar {
+          background-color:darkgrey; /* Fondo plomo */
+      }
+      .navbar-nav .nav-link,
+      .auth-section a {
+          font-weight: bold; /* Letras en negrita */
+      }
+      .auth-section .welcome {
+          color: rgb(226, 43, 43);
+          font-size: 15px;
+          margin-bottom: 5px;
+      }
+      .card-img-top {
+          max-height: 200px;
+          object-fit: cover;
+      }
+      .container {
+            margin-top: 2rem;
+      }
+      .title-badge {
+          font-size: 2.5rem;
+          font-weight: bold;
+          background-color: #6c757d;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          display: inline-block;
+          text-align: center;
+          margin-bottom: 2rem;
+      }
+      .card-img-top {
+          max-height: 200px;
+          object-fit: cover;
+      }
+      .card {
+          margin-bottom: 1.5rem;
+      }
+      .card-body {
+          background-color: #f8f9fa;
+          padding: 1rem;
+          border-radius: 0 0 0.5rem 0.5rem;
+      }
+      .card-title {
+          font-size: 1.2rem;
+          font-weight: bold;
+      }
+      .card-text {
+          margin-bottom: 1rem;
+      }
+      .btn-outline-success {
+          width: 100%;
+      }
+    </style>
+    
+    </head>
+    
+    <body>
+      <main class="container">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <!--creación de botón de hamburguesa-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#opciones">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- logo -->
+            <a class="navbar-brand" href="{% url 'YouTelefone' %}">
+                <img src="{% static 'img/logogodd.png' %}" width="80" height="80" alt="">
+            </a>
+            
+            <div class="reloj">
+                <span id="tiempo">00 : 00 : 00</span>
+            </div>
+    
+            <!-- enlaces -->
+            <div class="collapse navbar-collapse" id="opciones">   
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'YouTelefone' %}">
+                            <img src="{% static 'img/home.png' %}" alt="Inicio" width="20px"> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'adminmod' %}">Productos Proximamente</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link btn" href="{% url 'perfil' %}">Perfil: {{user.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn" href="{% url 'mis_pedidos' %}">Mis Pedidos</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'registrar' %}" id="userBookStop" class="btn">
+                            <img src="{% static 'img/registro.png' %}" alt="Registrarse" width="20px"> Registrarse
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                </ul>
+                <div class="auth-section">
+                    {% if user.is_authenticated %}
+                    <a href="#" style="color: rgb(226, 43, 43); font-size: 15px; margin-right: 10px;">Bienvenido {{ user.username }}</a>
+                    <a href="{% url 'salir' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/exit.png' %}" alt="Cerrar Sesión" width="20px"> Cerrar Sesión
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}" id="userBookStop" class="btn">
+                        <img src="{% static 'img/login.png' %}" alt="Iniciar Sesión" width="20px"> Iniciar sesión
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </main>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="title-badge">Tienda</h1>
+        </div>
+        <!-- Barra de búsqueda -->
+        <form method="GET" action="{% url 'tienda' %}">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Buscar productos" name="q" value="{{ query|default_if_none:'' }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    {% for produ in page_obj %}
+                    <div class="col-md-6">
+                        <div class="card h-100 text-center">
+                            {% if produ.imagen %}
+                                <img src="{{ produ.imagen.url }}" class="card-img-top mx-auto" alt="Producto Imagen">
+                            {% else %}
+                                <img src="{% static 'img/sinfoto.webp' %}" class="card-img-top mx-auto" alt="Sin Foto">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">Código: {{ produ.idProducto }}</h5>
+                                <p class="card-text">
+                                    Marca: {{ produ.marca }}<br>
+                                    Modelo: {{ produ.modelo }}<br>
+                                    Precio: ${{ produ.precio }}<br>
+                                    Stock: {{ produ.stock }}<br>
+                                    <a href="{% url 'detalle' produ.idProducto %}" class="btn btn-secondary">Info</a>
+                                </p><br>
+                                <a href="{% url 'agregar' produ.idProducto %}" class="btn btn-primary">Agregar al carro</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Paginación -->
+                <br><br>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item"><a class="page-link" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-4"><br><br>
+                {% include "carrito.html" %}
+            </div>
+        </div>
+    </div>
+    <br><br>
+    </body>
+<footer>
+    <p>Ubicacion del Local Fisico 
+      <a href="https://maps.app.goo.gl/TzZ2gkgPgCjznjmU7">
+        <img src="{% static 'img/logoubi.png' %}" alt="Ubicacion" width="25">
+      </a>
+    </p>
+    <p>Horario de Atencion de lunes a Viernes 10:00hrs a 18:00</p>
+    <p>Fabian Baeza, Jose Jimenez, &copy; Derechos de autor</p> 
+  
+    <p>Redes Sociales
+    <a href="https://www.instagram.com/youphonetec/"  >
+      <img src="{% static 'img/logoinstagram.png' %}" alt="Instagram" width="25">
+    </a>
+    <a href="https://twitter.com/YPhone51863">
+      <img src="{% static 'img/twiterlogo.png' %}" alt="Instagram" width="25">
+    </a>
+    </p>
+  </footer> 
+</html>
